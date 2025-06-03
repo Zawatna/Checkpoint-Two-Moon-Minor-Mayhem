@@ -29,17 +29,17 @@ hello
                     </div>
                 </button>
                 <div class="fw-bold fs-1 text-light">
-                    <span id="cheese">0</span>
+                    <span id="cheese">🧀 0 🧀</span>
                 </div>
             </div>
         </section>
 
         <!--SECTION totals clickupgrades and autoupgrades-->
         <section class="row text-info text-center fw-bold fs-2">
-            <div class="col-6">
+            <div class="col-6" onclick="totalClickUpgrades()">
                 Total Click Upgrades! <span id="totalclick">0</span>
             </div>
-            <div class="col-6">
+            <div class="col-6" onclick="totalAutoUpgrades()">
                 Total Auto Upgrades! <span id="totalauto">0</span>
             </div>
         </section>
@@ -47,28 +47,30 @@ hello
         <!-- click upgrades -->
         <section class="row text-center text-light p-3">
             <div class="col">
-                <button class="btn btn-warning stats fs-2" onclick="buyPickaxe()">⛏️ Pickaxe | 10 |
-                    +0<span id="pluspickaxe"></span>
+                <button class="btn btn-warning stats fs-2" onclick="buyPickaxe()">
+                    ⛏️ <span id="pickaxe">Pickaxe +1 | price | qty</span>
                 </button>
-                <button class="btn btn-warning fs-2" onclick="buyDrill()">
-                    ⚙️ Drill | 20 |+0<span id="plusdrill"></span>
+                <button class="btn btn-warning stats fs-2" onclick="buyDrill()">
+                    ⚙️<span id="drill">Drill +1 | price | qty</span>
                 </button>
-                <button class="btn btn-warning fs-2" onclick="buyHydroMole()">
-                    🌊 Hydro Mole <span id="plushydromole">0</span> </button>
-                <button class="btn btn-warning fs-2" onclick="buyDynamite()">
-                    🧨 Dynamite <span id="plusdynamite">0</span>
+                <button class="btn btn-warning stats fs-2" onclick="buyHydroMole()">
+                    🌊 <span id="hydromole">Hydro Mole +1 | price | qty</span>
                 </button>
+                <button class="btn btn-warning stats fs-2" onclick="buyDynamite()">
+                    🧨 <span id="dynamite">Dynamite +1 | price | qty</span>
+                </button>
+
 
             </div>
         </section>
         <!-- Auto upgrades -->
         <section class="row text-center text-light">
             <div class="col">
-                <button class="btn btn-warning fs-2" onclick="collectAutoUpgrades('Rover')">
-                    🛻 Rover <span id="plusclickupgrades">0</span>
+                <button class="btn btn-warning stats fs-2" onclick="collectAutoUpgrades()">
+                    🛻 <span id="rover">Rover +1 | price | qty</span>
                 </button>
-                <button class="btn btn-warning fs-2">
-                    🚀 Jet Pack <span id="plusautoupgrades">0</span></button>
+                <button class="btn btn-warning stats fs-2" onclick="collectAutoUpgrades()">
+                    🚀 <span id="jetpack">Jet Pack +1 | price | qty</span></button>
             </div>
         </section>
 

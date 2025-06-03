@@ -20,7 +20,7 @@ let clickUpgrades = [
         bonus: 5
     },
     {
-        name: 'hydro mole',
+        name: 'hydromole',
         emoji: '🌊',
         price: 30,
         quantity: 0,
@@ -44,7 +44,7 @@ let automaticUpgrades = [
         bonus: 40
     },
     {
-        name: 'jet pack',
+        name: 'jetpack',
         emoji: '🚀',
         price: 200,
         quantity: 0,
@@ -56,6 +56,7 @@ let automaticUpgrades = [
 function mine() {
     cheese += 1
     console.log("Cheese plus one", cheese)
+    // TODO this whole repeating section could be replaced with a for loop!
     if (clickUpgrades[0].quantity >= 1) {
         let totalClickBonus = (clickUpgrades[0].bonus) * (clickUpgrades[0].quantity);
         console.log("New Mining Power", totalClickBonus)
@@ -74,6 +75,16 @@ function mine() {
     if (clickUpgrades[3].quantity >= 1) {
         let totalClickBonus = (clickUpgrades[3].bonus) * (clickUpgrades[3].quantity);
         console.log("New Mining Power", totalClickBonus)
+        cheese = totalClickBonus + cheese
+    }
+    if (automaticUpgrades[0].quantity >= 1) {
+        let totalClickBonus = (automaticUpgrades[0].bonus) * (automaticUpgrades[0].quantity);
+        console.log("New Rover Power", totalClickBonus)
+        cheese = totalClickBonus + cheese
+    }
+    if (automaticUpgrades[1].quantity >= 1) {
+        let totalClickBonus = (automaticUpgrades[1].bonus) * (automaticUpgrades[1].quantity);
+        console.log("New Jetpack Power", totalClickBonus)
         cheese = totalClickBonus + cheese
     }
 
@@ -95,21 +106,22 @@ function buyPickaxe() {
     else if (cheese >= clickUpgrades[0].price) {
         clickUpgrades[0].quantity += 1
         cheese -= clickUpgrades[0].price
-        clickUpgrades[0].price = (Math.round(clickUpgrades[0].price * 0.1));
+        clickUpgrades[0].price = (Math.round(clickUpgrades[0].price * 1.1));
         console.log("Purchased")
-        updatePickaxe()
+        // updatePickaxe()
         updateCheese()
         updateKeyStats()
+        updateTotalClickUpgrades()
     }
 }
-
-function updatePickaxe() {
-    console.log("More axes!")
-    const axeContainer = document.getElementById("pluspickaxe")
-    axeContainer.innerHTML = clickUpgrades[0].quantity.toString()
-
-}
-
+// FIXME  abandon this function, and move on to updateKeyStats
+// function updatePickaxe() {
+//     console.log("More axes!")
+//     const axeContainer = document.getElementById("pluspickaxe")
+//     axeContainer.innerHTML = clickUpgrades[0].quantity.toString()
+//         //  add in more "drawing" to draw the upgrades price as well
+//         `<span> ⚙️Drill +1 |price | qty</span>`
+// }
 function buyDrill() {
 
     if (cheese < clickUpgrades[1].price) {
@@ -121,17 +133,10 @@ function buyDrill() {
         cheese -= clickUpgrades[1].price
         clickUpgrades[1].price = (Math.round(clickUpgrades[1].price * 1.2));
         console.log("Purchased")
-        updateDrill()
         updateCheese()
         updateKeyStats()
+        updateTotalClickUpgrades()
     }
-}
-
-function updateDrill() {
-    console.log("More drills!")
-    const drillContainer = document.getElementById("plusdrill")
-    drillContainer.innerHTML = clickUpgrades[1].quantity.toString()
-
 }
 
 function buyHydroMole() {
@@ -145,17 +150,10 @@ function buyHydroMole() {
         cheese -= clickUpgrades[2].price
         clickUpgrades[2].price = (Math.round(clickUpgrades[2].price * 1.3));
         console.log("Purchased")
-        updateHydroMole()
         updateCheese()
         updateKeyStats()
+        updateTotalClickUpgrades()
     }
-}
-
-function updateHydroMole() {
-    console.log("More Hydro Moles!")
-    const moleContainer = document.getElementById("plushydromole")
-    moleContainer.innerHTML = clickUpgrades[2].quantity.toString()
-
 }
 
 function buyDynamite() {
@@ -169,45 +167,66 @@ function buyDynamite() {
         cheese -= clickUpgrades[3].price
         clickUpgrades[3].price = (Math.round(clickUpgrades[3].price * 1.5));
         console.log("Purchased")
-        updateDynamite()
+        // updateDynamite()
         updateCheese()
         updateKeyStats()
+        updateTotalClickUpgrades()
+
     }
 }
-
-function updateDynamite() {
-    console.log("More dynamite!")
-    const dynamiteContainer = document.getElementById("plusdynamite")
-    dynamiteContainer.innerHTML = clickUpgrades[3].quantity.toString()
-}
-
-
-
-
-
-//1) not sure when things should be plural and not,
-//2) whether the let statsElm line is correct and why or why not
-//3) how to update the total stats buttons on the html page.
 
 function updateKeyStats() {
     clickUpgrades.forEach(clickUpgrade => {
         let clickUpgradeBinElm = document.getElementById(clickUpgrade.name)
-        // console.log(clickUpgrade.name, clickUpgradeBinElm)
-        let statsElm = clickUpgradeBinElm.querySelector('plusclickupgrades')
-        // console.log('📈', statsElm);
-        statsElm.innerHTML = `${clickUpgrade.name} | ${clickUpgrade.price} | ${clickUpgrade.bonus}`
+        console.log(clickUpgrade.name, clickUpgradeBinElm)
+        clickUpgradeBinElm.innerHTML = `${clickUpgrade.name} +${clickUpgrade.bonus} | 🧀${clickUpgrade.price} | #️${clickUpgrade.quantity}`
     })
 }
 
-function collectAutoUpgrades() {
-    automaticUpgrades.forEach(automaticUpgrades => {
-        let automaticUpgradeBinElm = document.getElementById(automaticUpgrades.name)
-
-        let totalAutomaticUpgradesElm = (automaticUpgrades.bonus) * (automaticUpgrades.quantity);
-        console.log(".stats", totalAutomaticUpgradesElm)
-        cheese = totalAutomaticUpgradesElm + cheese
-        updateAutoUpgrades()
+function buyRover() {
+    if (cheese < automaticUpgrades[0].price) {
+        window.alert("Sorry, you do not have enough cheese!")
+        return
+    }
+    else if (cheese >= automaticUpgrades[0].price) {
+        automaticUpgrades[0].quantity += 1
+        cheese -= automaticUpgrades[0].price
+        automaticUpgrades[0].price = (Math.round(automaticUpgrades[0].price * 1.6));
+        console.log("Purchased Rover")
         updateCheese()
+        updateAutoUpgrades()
+        updateTotalAutoUpgrades()
+    }
+}
+function buyJetpack() {
+    if (cheese < automaticUpgrades[0].price) {
+        window.alert("Sorry, you do not have enough cheese!")
+        return
+    }
+    else if (cheese >= automaticUpgrades[0].price) {
+        automaticUpgrades[0].quantity += 1
+        cheese -= automaticUpgrades[0].price
+        automaticUpgrades[0].price = (Math.round(automaticUpgrades[0].price * 2.2));
+        console.log("Purchased Jetpack")
+        updateCheese()
+        updateAutoUpgrades()
+        updateTotalAutoUpgrades()
+    }
+}
+// FIXME we need functions to buy our auto upgrades
+
+// calculating + data manipulation
+// this function needs to add up the total bonus of all the upgrades in autoUpgrades
+// add that total to cheese
+// TODO logically this calculation is fine, but it's mixed with drawing elements that ultimately breaks things
+function collectAutoUpgrades() {
+    automaticUpgrades.forEach(automaticUpgrade => {
+        let sum = (automaticUpgrade.bonus) * (automaticUpgrade.quantity);
+        cheese = sum + cheese
+        console.log('auto collecting', sum);
+        updateAutoUpgrades() // bring me back once this calculation works
+        updateCheese()
+        updateTotalAutoUpgrades()
     })
 }
 function updateAutoUpgrades() {
@@ -215,14 +234,46 @@ function updateAutoUpgrades() {
     automaticUpgrades.forEach(automaticUpgrade => {
         let automaticUpgradeBinElm = document.getElementById(automaticUpgrade.name)
         //console.log(automaticUpgrade.name, automaticUpgradeBinElm);
-        let statsElm = automaticUpgradeBinElm.querySelector('.stats')
         //console.log('', statsElm);
-        statsElm.innerHTML = `${automaticUpgrade.name} | ${automaticUpgrade.price} | ${automaticUpgrade.bonus}`
+        automaticUpgradeBinElm.innerHTML = `${automaticUpgrade.name} +${automaticUpgrade.bonus} | 🧀${automaticUpgrade.price} | #${automaticUpgrade.quantity}`
     })
 }
 
-setInterval(collectAutoUpgrades, 3000);
+// drawing
+// FIXME this tries to grab elements based on upgrade names, but there are no ID's with those upgrade names
+// it also tries to grab a SECOND element, which is not needed
 
+setInterval(collectAutoUpgrades, 5000);
+
+// FIXME need a totalClickUpgrades
+// FIXME need a totalAutoUpgrades
+// both of these will add up your total power, then render it to the page
 function totalClickUpgrades() {
+    let total = 0
+    clickUpgrades.forEach(clickUpgrade => {
+        total += (clickUpgrade.quantity) * (clickUpgrade.bonus)
+        console.log('🧮', total);
+    })
+    console.log('✔️🧮', total);
 
+    return total
+}
+function updateTotalClickUpgrades() {
+    const totalClickUpgradesElm = document.getElementById('totalclick')
+    totalClickUpgradesElm.innerHTML = `${totalClickUpgrades()}`
+}
+
+function totalAutoUpgrades() {
+    let total = 0
+    automaticUpgrades.forEach(automaticUpgrade => {
+        total += (automaticUpgrade.quantity) * (automaticUpgrade.bonus)
+        console.log('🧮', total);
+    })
+    console.log('✔️🧮', total);
+    return total
+}
+
+function updateTotalAutoUpgrades() {
+    const totalAutoUpgradesElm = document.getElementById('totalauto')
+    totalAutoUpgradesElm.innerHTML = `${totalAutoUpgrades()}`
 }

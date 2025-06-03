@@ -7,7 +7,7 @@ body {
 }
 
 .img-moon-eclipse {
-    image: url ("https://images.unsplash.com/photo-1509978778156-518eea30166b?q=80&w=1315&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    image: url("https://images.unsplash.com/photo-1509978778156-518eea30166b?q=80&w=1315&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
     height: 100px;
     width: 100px;
     border-radius: 50%;
